@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN" data-mode="light" data-theme="cyan">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="尹宜博的公开项目与作品库">
+  <meta name="color-scheme" content="light dark">
+  <title>项目库｜尹宜博</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="site.js" defer></script>
+</head>
+<body data-page="projects">
+  <a class="skip" href="#main">跳到主要内容</a>
+  <div class="page-wipe" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
+  <aside class="side-rail" aria-hidden="true"><span>PROJECTS</span><i id="railLine"></i><span id="scrollPercent">00%</span></aside>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow hero-in">PROJECTS / 作品库</p>
+        <h1 class="hero-in d1">项目与作品。<span class="outline">分类陈列。</span></h1>
+        <p class="page-lead hero-in d2">仅收录真实完成、能够展示过程或结果的作品。</p>
+      </div>
+    </section>
+
+    <section class="project-library-section">
+      <div class="container">
+        <div class="project-category-grid" id="projectCategoryGrid"></div>
+        <div class="project-collection" id="projectCollection" hidden>
+          <header class="project-collection-head">
+            <p class="eyebrow">WORKS / 作品</p>
+            <h2 id="projectCollectionTitle"></h2>
+          </header>
+          <div class="project-grid" id="projectGrid"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+  <button class="icon-btn back-top" id="backTop" type="button" aria-label="返回顶部">↑</button>
+</body>
+</html>

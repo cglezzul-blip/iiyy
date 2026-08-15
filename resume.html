@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN" data-mode="light" data-theme="cyan">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="尹宜博的中文基础简历">
+  <meta name="color-scheme" content="light dark">
+  <title>简历｜尹宜博</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="site.js" defer></script>
+</head>
+<body data-page="resume">
+  <a class="skip" href="#main">跳到主要内容</a>
+  <div class="page-wipe" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
+  <header id="site-header"></header>
+
+  <main class="resume-page" id="main">
+    <div class="container">
+      <div class="resume-toolbar no-print">
+        <div><p class="eyebrow" style="margin:0">RESUME / 基础版本</p><p class="muted" style="margin:4px 0 0">当前用于基础介绍；明确岗位后再生成定向的一页简历。</p></div>
+        <button class="btn primary" id="resumePrint" type="button">打印 / 保存 PDF</button>
+      </div>
+
+      <article class="resume-sheet">
+        <header class="resume-head">
+          <div><h1 id="resumeName"></h1><p><strong id="resumeRole"></strong></p></div>
+          <div class="resume-contact"><p id="resumeLocation"></p><p id="resumeEmail"></p></div>
+        </header>
+
+        <section class="resume-section">
+          <div class="resume-label">个人概况</div>
+          <div class="resume-content"><p id="resumeProfile"></p></div>
+        </section>
+
+        <section class="resume-section">
+          <div class="resume-label">教育背景</div>
+          <div class="resume-content"><h2 id="resumeSchool"></h2><p><strong id="resumeMajor"></strong></p><p class="muted" id="resumePeriod"></p></div>
+        </section>
+
+        <section class="resume-section">
+          <div class="resume-label">当前能力</div>
+          <div class="resume-content"><ul class="resume-list" id="resumeCapabilities"></ul></div>
+        </section>
+
+        <section class="resume-section">
+          <div class="resume-label">关注方向</div>
+          <div class="resume-content"><ul class="resume-list" id="resumeInterests"></ul></div>
+        </section>
+
+        <section class="resume-section" id="resumeProjectsSection" hidden>
+          <div class="resume-label">项目经历</div>
+          <div class="resume-content"><ul class="resume-list" id="resumeProjects"></ul></div>
+        </section>
+
+        <section class="resume-section" id="resumeExperienceSection" hidden>
+          <div class="resume-label">实践经历</div>
+          <div class="resume-content" id="resumeExperience"></div>
+        </section>
+
+        <section class="resume-section" id="resumeAwardsSection" hidden>
+          <div class="resume-label">获奖证书</div>
+          <div class="resume-content" id="resumeAwards"></div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer id="site-footer"></footer>
+  <button class="icon-btn back-top no-print" id="backTop" type="button" aria-label="返回顶部">↑</button>
+</body>
+</html>

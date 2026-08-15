@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN" data-mode="light" data-theme="cyan">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="尹宜博的个人主页、成长记录与项目作品库">
+  <meta name="color-scheme" content="light dark">
+  <title>尹宜博｜个人主页</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="site.js" defer></script>
+</head>
+<body data-page="home">
+  <a class="skip" href="#main">跳到主要内容</a>
+  <div class="page-wipe" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
+  <aside class="side-rail" aria-hidden="true"><span>SCROLL</span><i id="railLine"></i><span id="scrollPercent">00%</span></aside>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="hero home-hero">
+      <div class="container home-intro">
+        <div class="home-copy">
+          <p class="eyebrow hero-in">PERSONAL INDEX · VERSION 2.1</p>
+          <h1 class="hero-in d1" id="heroName"></h1>
+          <p class="hero-echo hero-in d2" id="heroEnglish" aria-hidden="true"></p>
+          <p class="hero-summary hero-in d3" id="heroSummary"></p>
+          <div class="hero-education hero-in d3">
+            <span>EDUCATION</span>
+            <div><strong id="heroSchool"></strong><small id="heroMajor"></small></div>
+            <time id="heroEducationPeriod"></time>
+          </div>
+          <div class="hero-contact hero-in d3">
+            <span>EMAIL / 联系方式</span>
+            <a data-email-link><strong data-email-text></strong><i>↗</i></a>
+            <button type="button" data-copy-email>复制</button>
+          </div>
+          <div class="hero-actions hero-in d4">
+            <a class="btn primary" href="#directory">浏览内容目录 <span class="arrow">↓</span></a>
+            <a class="btn" href="resume.html">查看简历 <span class="arrow">↗</span></a>
+          </div>
+        </div>
+
+        <div class="interactive-visual hero-in d3" id="interactiveVisual" aria-hidden="true">
+          <div class="visual-stage" id="visualStage">
+            <div class="visual-grid"></div>
+            <div class="visual-glow"></div>
+            <div class="visual-card visual-card-profile"><span>01</span><b>PROFILE</b></div>
+            <div class="visual-card visual-card-growth"><span>02</span><b>GROWTH</b></div>
+            <div class="visual-card visual-card-project"><span>03</span><b>PROJECT</b></div>
+            <div class="visual-core"><small>PERSONAL INDEX</small><strong>YYB</strong><i></i></div>
+            <div class="visual-coordinate coordinate-x">X / 2026</div>
+            <div class="visual-coordinate coordinate-y">Y / DATA</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="focus-marquee" aria-hidden="true">
+      <div class="focus-track">
+        <span><b>01</b> PERSONAL PROFILE　/　<b>02</b> GROWTH RECORD　/　<b>03</b> PROJECT LIBRARY　/　</span>
+        <span><b>01</b> PERSONAL PROFILE　/　<b>02</b> GROWTH RECORD　/　<b>03</b> PROJECT LIBRARY　/　</span>
+      </div>
+    </div>
+
+    <section class="directory-section" id="directory">
+      <div class="container">
+        <header class="section-head reveal">
+          <div class="section-no">01 / DIRECTORY</div>
+          <div><h2>三类内容，各自成档。</h2><p class="section-desc">个人档案、成长记录与项目作品。</p></div>
+        </header>
+
+        <div class="portal-grid">
+          <a class="portal-card portal-about reveal" href="about.html">
+            <div class="portal-art portal-art-profile" aria-hidden="true"><span class="profile-ring"></span><span class="profile-mark">YYB</span><span class="profile-grid"></span></div>
+            <div class="portal-top"><span>01 / PERSONAL PROFILE</span><span>学历与成果</span></div>
+            <div class="portal-copy"><p>PERSONAL PROFILE</p><h3>个人档案</h3><ul><li>学历背景</li><li>证书竞赛</li><li>科研论文</li></ul></div>
+            <div class="portal-action"><span>进入个人档案</span><b>↗</b></div>
+          </a>
+
+          <a class="portal-card portal-growth reveal" href="growth.html">
+            <div class="portal-art portal-art-growth" aria-hidden="true"><span></span><span></span><span></span><i>01</i><i>02</i><i>03</i></div>
+            <div class="portal-top"><span>02 / GROWTH RECORD</span><span>持续更新</span></div>
+            <div class="portal-copy"><p>GROWTH RECORD</p><h3>成长记录</h3><ul><li>学习事件</li><li>实践记录</li><li>阶段变化</li></ul></div>
+            <div class="portal-action"><span>查看成长轨迹</span><b>↗</b></div>
+          </a>
+
+          <a class="portal-card portal-projects reveal" href="projects.html">
+            <div class="portal-art portal-art-code" aria-hidden="true"><span class="code-window"><i></i><i></i><i></i><b></b><b></b><b></b><b></b></span><span class="code-orbit"></span></div>
+            <div class="portal-top"><span>03 / PROJECT LIBRARY</span><span>分类浏览</span></div>
+            <div class="portal-copy"><p>PROJECT LIBRARY</p><h3>项目与作品</h3><ul><li>Vibe Coding</li><li>程序与数据</li><li>其他实践作品</li></ul></div>
+            <div class="portal-action"><span>进入项目库</span><b>↗</b></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="site-footer"></footer>
+  <button class="icon-btn back-top" id="backTop" type="button" aria-label="返回顶部" title="返回顶部">↑</button>
+</body>
+</html>

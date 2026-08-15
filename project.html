@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN" data-mode="light" data-theme="cyan">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="尹宜博的项目详情">
+  <meta name="color-scheme" content="light dark">
+  <title>项目详情｜尹宜博</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="site.js" defer></script>
+</head>
+<body data-page="project">
+  <a class="skip" href="#main">跳到主要内容</a>
+  <div class="page-wipe" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
+  <aside class="side-rail" aria-hidden="true"><span>PROJECT</span><i id="railLine"></i><span id="scrollPercent">00%</span></aside>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <div id="projectDetail" hidden>
+      <section class="page-hero">
+        <div class="container">
+          <p class="eyebrow hero-in">PROJECT / DETAIL</p>
+          <h1 class="hero-in d1" id="projectTitle"></h1>
+          <p class="page-lead hero-in d2" id="projectSummary"></p>
+        </div>
+      </section>
+
+      <section class="project-media-section" id="projectMediaSection" hidden>
+        <div class="container">
+          <figure class="project-cover-frame reveal" id="projectCoverFrame" hidden><img id="projectCover" alt="" decoding="async"></figure>
+          <div class="project-gallery" id="projectGallery"></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container project-detail-grid">
+          <div>
+            <article class="project-block reveal" id="projectProblemBlock"><p class="eyebrow">01 / PROBLEM</p><h2>背景与问题</h2><p class="muted" id="projectProblem"></p></article>
+            <article class="project-block reveal" id="projectActionsBlock"><p class="eyebrow">02 / ACTION</p><h2>实施过程</h2><ol class="step-list" id="projectActions"></ol></article>
+            <article class="project-block reveal" id="projectOutcomesBlock"><p class="eyebrow">03 / OUTCOME</p><h2>结果与证据</h2><ol class="step-list" id="projectOutcomes"></ol></article>
+          </div>
+          <aside class="card project-side reveal">
+            <p class="eyebrow">PROJECT INFO</p>
+            <div class="project-info-row" id="projectPeriodRow"><h3>时间</h3><p id="projectPeriod"></p></div>
+            <div class="project-info-row" id="projectRoleRow"><h3>角色</h3><p id="projectRole"></p></div>
+            <div class="project-info-row" id="projectStackRow"><h3>技术与工具</h3><div class="project-tags" id="projectStack"></div></div>
+            <div class="button-row" id="projectExternalLinks"></div>
+            <div class="button-row"><a class="btn" href="projects.html">返回项目库</a></div>
+          </aside>
+        </div>
+      </section>
+    </div>
+
+    <section class="page-hero" id="projectMissing" hidden>
+      <div class="container"><p class="eyebrow">PROJECT / NOT FOUND</p><h1>项目尚未公开。<span class="outline">暂无详情内容。</span></h1><div class="button-row"><a class="btn primary" href="projects.html">返回项目库 <span class="arrow">→</span></a><a class="btn" href="index.html">返回首页</a></div></div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+  <button class="icon-btn back-top" id="backTop" type="button" aria-label="返回顶部">↑</button>
+</body>
+</html>

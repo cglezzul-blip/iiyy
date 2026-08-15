@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN" data-mode="light" data-theme="cyan">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="尹宜博的公开证书档案">
+  <meta name="color-scheme" content="light dark">
+  <title>证书档案｜尹宜博</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="site.js" defer></script>
+</head>
+<body data-page="certificates">
+  <a class="skip" href="#main">跳到主要内容</a>
+  <div class="page-wipe" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
+  <aside class="side-rail" aria-hidden="true"><span>CERTIFICATES</span><i id="railLine"></i><span id="scrollPercent">00%</span></aside>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow hero-in">PROFILE / 证书库</p>
+        <h1 class="hero-in d1">证书档案。<span class="outline">VERIFIED RECORDS.</span></h1>
+        <p class="page-lead hero-in d2">集中保存可公开查看的证书与对应信息；点击证书图片可查看原图。</p>
+        <div class="button-row hero-in d3"><a class="btn" href="about.html">← 返回个人档案</a></div>
+      </div>
+    </section>
+
+    <section class="certificate-library-section">
+      <div class="container">
+        <header class="certificate-library-head reveal">
+          <div><p class="eyebrow">CERTIFICATES / 证书</p><h2>公开证书。</h2></div>
+          <div class="certificate-library-count" aria-label="公开证书数量"><strong id="certificateCount">00</strong><span>PUBLIC RECORDS</span></div>
+        </header>
+        <div class="achievement-items" id="certificateItems"></div>
+        <div class="empty-state" id="certificateEmpty" hidden><div><p class="eyebrow">NO RECORDS</p><h2>暂无公开证书。</h2></div><div class="empty-orbit" aria-hidden="true"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+  <button class="icon-btn back-top" id="backTop" type="button" aria-label="返回顶部">↑</button>
+</body>
+</html>
