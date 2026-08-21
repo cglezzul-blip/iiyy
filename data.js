@@ -1,7 +1,7 @@
 window.SITE_DATA = {
   meta: {
-    version: "2.1",
-    updated: "2026-08-15",
+    version: "2.4",
+    updated: "2026-08-21",
     language: "zh-CN"
   },
   person: {
@@ -45,19 +45,10 @@ window.SITE_DATA = {
     {
       id: "site-baseline",
       date: "2026-08-15",
-      type: "档案系统",
-      title: "建立个人主页与简历素材结构",
-      summary: "将公开个人主页、项目展示、成长记录和私人简历素材库分开，为大学阶段持续积累留下统一入口。",
+      type: "项目实践",
+      title: "完成个人网站首个公开版本",
+      summary: "完成个人档案、成长记录、项目作品与证书展示等页面，并建立后续持续更新的内容结构。",
       evidence: "个人网站 v2.1",
-      public: true
-    },
-    {
-      id: "stage-confirmed",
-      date: "2026-08-03",
-      type: "阶段确认",
-      title: "确认大学与专业起点",
-      summary: "确认将就读山东管理学院数据科学与大数据技术专业，并将程序设计、数学和英语作为第一阶段共同基础。",
-      evidence: "个人基础档案",
       public: true
     }
   ],
@@ -69,9 +60,29 @@ window.SITE_DATA = {
     { id: "research-analysis", mark: "R", title: "调研与分析", description: "围绕真实问题形成的调研、比较与分析成果。", examples: ["调查报告", "案例分析", "数据报告"] },
     { id: "other", mark: "+", title: "其他作品", description: "无法归入以上类别、但能够展示过程与结果的作品。", examples: ["演示设计", "内容作品", "其他实践"] }
   ],
-  projects: [],
+  projects: [
+    {
+      id: "campus-core-defense",
+      category: "vibe-coding",
+      title: "校园核心防线：YYB",
+      status: "可运行 · v0.5.1",
+      period: "2026.08—至今",
+      role: "项目发起、玩法设计、试玩反馈与验收",
+      summary: "2D 俯视角动作塔防游戏：驾驶可独立瞄准的防卫坦克，在开放校园战场中建造设施、抵御波次敌人并守护能源核心。",
+      result: "与 Codex 协作完成玩法实现、测试和打包；当前形成 Web 构建与 Windows 便携版交付链路，并通过 47 项自动化测试。",
+      stack: ["Phaser", "TypeScript", "Vite", "Vitest", "Electron", "Codex"],
+      cover: "assets/projects/campus-core-defense.webp",
+      coverAlt: "校园核心防线游戏准备阶段画面",
+      github: "",
+      demo: "https://cglezzul-blip.github.io/tank/",
+      detail: false,
+      featured: true,
+      includeInResume: false,
+      public: true
+    }
+  ],
   achievementCategories: [
-    { id: "certificates", code: "01", title: "证书", english: "CERTIFICATES", description: "语言、技能与资格证明。", directory: "assets/certificates/", href: "certificates.html" },
+    { id: "certificates", code: "01", title: "证书", english: "CERTIFICATES", description: "课程、技能与资格证明。", directory: "assets/certificates/", href: "certificates.html" },
     { id: "competitions", code: "02", title: "竞赛", english: "COMPETITIONS", description: "参赛经历、获奖结果与团队职责。", directory: "assets/competitions/" },
     { id: "research", code: "03", title: "科研", english: "RESEARCH", description: "实验室、课题、研究助理与阶段成果。", directory: "assets/research/" },
     { id: "papers", code: "04", title: "论文", english: "PAPERS", description: "论文、投稿、录用与公开发表记录。", directory: "assets/papers/" },
@@ -80,12 +91,12 @@ window.SITE_DATA = {
   achievements: [
     {
       type: "certificates",
-      title: "人工智能训练师证书（初级）",
+      title: "人工智能训练师（初级）培训课程认证",
       issuer: "达摩院-机器智能技术事业部",
       date: "2026.08.14",
       validUntil: "2027.08.14",
       image: "assets/certificates/ai-trainer-junior-2026.webp",
-      alt: "尹宜博人工智能训练师（初级）证书",
+      alt: "尹宜博人工智能训练师（初级）培训课程认证证书",
       public: true
     }
   ],

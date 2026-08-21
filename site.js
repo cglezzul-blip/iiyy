@@ -15,6 +15,16 @@
   const reducedMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function buildChrome() {
+    const ambient = create("div", "ambient-background");
+    ambient.setAttribute("aria-hidden", "true");
+    ambient.append(
+      create("span", "ambient-glow"),
+      create("span", "ambient-aurora ambient-aurora-one"),
+      create("span", "ambient-aurora ambient-aurora-two"),
+      create("span", "ambient-orbit")
+    );
+    document.body.prepend(ambient);
+
     const current = document.body.dataset.page || "home";
     const items = [
       ["home", "首页", "index.html"],
@@ -44,10 +54,6 @@
       });
 
       const actions = create("div", "nav-actions");
-      const resume = create("a", "nav-resume", "简历");
-      resume.href = "resume.html";
-      resume.title = "打开简历视图";
-      if (current === "resume") resume.setAttribute("aria-current", "page");
       const mode = create("button", "icon-btn", "◐");
       mode.id = "modeToggle";
       mode.type = "button";
@@ -59,7 +65,7 @@
       menu.setAttribute("aria-label", "打开导航");
       menu.setAttribute("aria-controls", "navLinks");
       menu.setAttribute("aria-expanded", "false");
-      actions.append(resume, mode, menu);
+      actions.append(mode, menu);
       nav.append(brand, links, actions);
       header.append(nav);
     }
@@ -145,6 +151,32 @@
     update();
   }
 
+  function setupAmbientBackground() {
+    if (reducedMotion()) return;
+    const root = document.documentElement;
+    let currentX = 72;
+    let currentY = 18;
+    let targetX = currentX;
+    let targetY = currentY;
+    let frame = 0;
+
+    const draw = () => {
+      currentX += (targetX - currentX) * .1;
+      currentY += (targetY - currentY) * .1;
+      root.style.setProperty("--ambient-x", `${currentX.toFixed(2)}%`);
+      root.style.setProperty("--ambient-y", `${currentY.toFixed(2)}%`);
+      if (Math.abs(targetX - currentX) > .05 || Math.abs(targetY - currentY) > .05) frame = requestAnimationFrame(draw);
+      else frame = 0;
+    };
+
+    addEventListener("pointermove", event => {
+      if (!matchMedia("(hover:hover) and (pointer:fine)").matches) return;
+      targetX = event.clientX / Math.max(1, innerWidth) * 100;
+      targetY = event.clientY / Math.max(1, innerHeight) * 100;
+      if (!frame) frame = requestAnimationFrame(draw);
+    }, { passive: true });
+  }
+
   function setupMotionEnhancements() {
     const staggerGroups = [".project-grid"];
     staggerGroups.forEach(selector => {
@@ -212,6 +244,41 @@
           card.style.setProperty("--layer-y", `${(y * 8).toFixed(1)}px`);
           card.style.setProperty("--spot-x", `${((x + 1) * 50).toFixed(1)}%`);
           card.style.setProperty("--spot-y", `${((y + 1) * 50).toFixed(1)}%`);
+        });
+      });
+      card.addEventListener("pointerleave", reset);
+    });
+  }
+
+  function setupProjectCategoryMotion() {
+    const grid = $("#projectCategoryGrid");
+    const cards = $$(".project-category-card", grid || document);
+    if (!grid || !cards.length || reducedMotion() || !matchMedia("(hover:hover) and (pointer:fine)").matches) return;
+
+    cards.forEach(card => {
+      let frame = 0;
+      const reset = () => {
+        cancelAnimationFrame(frame);
+        card.classList.remove("is-pointer-active");
+        grid.classList.remove("is-category-hovering");
+        card.style.setProperty("--category-rx", "0deg");
+        card.style.setProperty("--category-ry", "0deg");
+      };
+      card.addEventListener("pointerenter", () => {
+        cards.forEach(item => item.classList.remove("is-pointer-active"));
+        card.classList.add("is-pointer-active");
+        grid.classList.add("is-category-hovering");
+      });
+      card.addEventListener("pointermove", event => {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          const x = Math.max(-1, Math.min(1, (event.clientX - rect.left) / rect.width * 2 - 1));
+          const y = Math.max(-1, Math.min(1, (event.clientY - rect.top) / rect.height * 2 - 1));
+          card.style.setProperty("--category-rx", `${(-y * 2.6).toFixed(2)}deg`);
+          card.style.setProperty("--category-ry", `${(x * 3.2).toFixed(2)}deg`);
+          card.style.setProperty("--category-spot-x", `${((x + 1) * 50).toFixed(1)}%`);
+          card.style.setProperty("--category-spot-y", `${((y + 1) * 50).toFixed(1)}%`);
         });
       });
       card.addEventListener("pointerleave", reset);
@@ -293,7 +360,24 @@
     }
     const previous = button.textContent;
     button.textContent = "已复制";
+    showToast("邮箱已复制");
     setTimeout(() => { button.textContent = previous; }, 1500);
+  }
+
+  function showToast(message) {
+    let toast = $("#siteToast");
+    if (!toast) {
+      toast = create("div", "site-toast");
+      toast.id = "siteToast";
+      toast.setAttribute("role", "status");
+      toast.setAttribute("aria-live", "polite");
+      document.body.append(toast);
+    }
+    toast.textContent = message;
+    toast.classList.remove("show");
+    requestAnimationFrame(() => toast.classList.add("show"));
+    clearTimeout(showToast.timer);
+    showToast.timer = setTimeout(() => toast.classList.remove("show"), 1800);
   }
 
   function bindEmailButtons() {
@@ -307,15 +391,11 @@
 
   function makeProjectCard(project, index) {
     const card = create("article", "project-card reveal");
+    if (project.featured) card.classList.add("is-featured");
     card.dataset.category = project.category || "other";
+    card.dataset.project = project.id;
     const category = (data.projectCategories || []).find(item => item.id === project.category);
-    const detailHref = `project.html?id=${encodeURIComponent(project.id)}`;
-    const hasDetail = Boolean(project.problem || project.role || (project.actions || []).length || (project.outcomes || []).length || (project.gallery || []).length);
-    const visual = create(hasDetail ? "a" : "div", "project-visual");
-    if (hasDetail) {
-      visual.href = detailHref;
-      visual.setAttribute("aria-label", `查看${project.title}项目详情`);
-    }
+    const visual = create("div", "project-visual");
     if (project.cover) {
       visual.classList.add("has-image");
       const image = create("img");
@@ -328,28 +408,36 @@
         visual.classList.remove("has-image");
       }, { once: true });
       visual.append(image);
+    } else {
+      visual.classList.add("is-placeholder", `theme-${project.visualTheme || "default"}`);
+      const placeholder = create("div", "project-placeholder-art");
+      placeholder.setAttribute("aria-hidden", "true");
+      placeholder.append(
+        create("span", "project-placeholder-kicker", project.visualTheme === "game" ? "CAMPUS / DEFENSE" : "PROJECT / PREVIEW"),
+        create("strong", "", project.visualTheme === "game" ? "CORE" : "YYB"),
+        create("i", "", "封面待补充")
+      );
+      visual.append(placeholder);
     }
     const visualMeta = create("div", "project-visual-meta");
     visualMeta.append(create("span", "project-no", String(index + 1).padStart(2, "0")), create("span", "project-status", project.status || "作品"));
     visual.append(visualMeta);
-    if (hasDetail) visual.append(create("span", "project-visual-arrow", "↗"));
     const body = create("div", "project-body");
     const meta = create("div", "project-meta");
     meta.append(create("span", "", category?.title || "其他作品"), create("span", "", project.period || ""));
-    const title = hasDetail ? create("a", "project-title-link") : create("div", "project-title-link");
-    if (hasDetail) title.href = detailHref;
+    const title = create("div", "project-title-link");
     title.append(create("h3", "", project.title));
-    if (hasDetail) title.append(create("span", "", "↗"));
     body.append(meta, title, create("p", "project-summary", project.summary || ""));
+    const facts = create("dl", "project-card-facts");
+    [["我的职责", project.role], ["当前成果", project.result]].forEach(([label, value]) => {
+      if (!value) return;
+      const row = create("div");
+      row.append(create("dt", "", label), create("dd", "", value));
+      facts.append(row);
+    });
     const tags = create("div", "project-tags");
     (project.stack || []).slice(0, 4).forEach(tag => tags.append(create("span", "badge", tag)));
     const actions = create("div", "button-row project-card-actions");
-    if (hasDetail) {
-      const link = create("a", "btn", "详情 ");
-      link.href = detailHref;
-      link.append(create("span", "arrow", "→"));
-      actions.append(link);
-    }
     if (project.github) {
       const github = create("a", "btn", "GitHub ↗");
       github.href = project.github;
@@ -364,8 +452,10 @@
       demo.rel = "noopener";
       actions.append(demo);
     }
+    if (!actions.children.length) actions.append(create("span", "project-link-placeholder", "项目网址待补"));
+    if (facts.children.length) body.append(facts);
     if (tags.children.length) body.append(tags);
-    if (actions.children.length) body.append(actions);
+    body.append(actions);
     card.append(visual, body);
     return card;
   }
@@ -518,7 +608,8 @@
     const collection = $("#projectCollection");
     const grid = $("#projectGrid");
 
-    const showCategory = category => {
+    const showCategory = (category, options = {}) => {
+      const { scroll = true, updateUrl = true } = options;
       const matches = projects.filter(project => (project.category || "other") === category.id);
       $$(".project-category-card", $("#projectCategoryGrid")).forEach(card => {
         card.setAttribute("aria-pressed", String(card.dataset.category === category.id));
@@ -527,9 +618,15 @@
       $("#projectCollectionTitle").textContent = `${category.title} · ${String(matches.length).padStart(2, "0")}`;
       collection.hidden = matches.length === 0;
       matches.forEach((project, index) => grid.append(makeProjectCard(project, index)));
+      if (updateUrl) {
+        const url = new URL(location.href);
+        url.searchParams.set("category", category.id);
+        history.replaceState(null, "", url);
+      }
       if (matches.length) {
         setupReveal();
-        collection.scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth", block: "start" });
+        setupMotionEnhancements();
+        if (scroll) collection.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
       }
     };
 
@@ -555,79 +652,12 @@
       button.addEventListener("click", () => showCategory(category));
       $("#projectCategoryGrid").append(button);
     });
-  }
 
-  function renderProjectDetail() {
-    if (document.body.dataset.page !== "project") return;
-    const id = new URLSearchParams(location.search).get("id");
-    const project = publicProjects().find(item => item.id === id);
-    if (!project) {
-      $("#projectMissing").hidden = false;
-      return;
+    const requestedCategory = new URLSearchParams(location.search).get("category");
+    const initialCategory = categories.find(category => category.id === requestedCategory);
+    if (initialCategory && projects.some(project => (project.category || "other") === initialCategory.id)) {
+      showCategory(initialCategory, { scroll: false, updateUrl: false });
     }
-    document.title = `${project.title}｜${data.person.name}`;
-    $("#projectDetail").hidden = false;
-    $("#projectTitle").textContent = project.title;
-    $("#projectSummary").textContent = project.summary;
-    if (project.period) $("#projectPeriod").textContent = project.period;
-    else $("#projectPeriodRow").hidden = true;
-    if (project.role) $("#projectRole").textContent = project.role;
-    else $("#projectRoleRow").hidden = true;
-    if (project.problem) $("#projectProblem").textContent = project.problem;
-    else $("#projectProblemBlock").hidden = true;
-    const actions = project.actions || [];
-    actions.forEach(item => $("#projectActions").append(create("li", "", item)));
-    if (!actions.length) $("#projectActionsBlock").hidden = true;
-    const outcomes = project.outcomes || [];
-    outcomes.forEach(item => $("#projectOutcomes").append(create("li", "", item)));
-    if (!outcomes.length) $("#projectOutcomesBlock").hidden = true;
-    (project.stack || []).forEach(item => $("#projectStack").append(create("span", "badge", item)));
-    if (!(project.stack || []).length) $("#projectStackRow").hidden = true;
-
-    const mediaSection = $("#projectMediaSection");
-    const coverFrame = $("#projectCoverFrame");
-    const coverImage = $("#projectCover");
-    const gallery = project.gallery || [];
-    if (project.cover) {
-      mediaSection.hidden = false;
-      coverFrame.hidden = false;
-      coverImage.src = project.cover;
-      coverImage.alt = project.coverAlt || `${project.title}项目封面`;
-      coverImage.loading = "lazy";
-      coverImage.addEventListener("error", () => {
-        coverFrame.hidden = true;
-        if (!gallery.length) mediaSection.hidden = true;
-      }, { once: true });
-    }
-    if (gallery.length) {
-      mediaSection.hidden = false;
-      gallery.forEach((entry, index) => {
-        const item = typeof entry === "string" ? { src: entry } : entry;
-        if (!item.src) return;
-        const link = create("a", "project-gallery-item reveal");
-        link.href = item.src;
-        link.target = "_blank";
-        link.rel = "noopener";
-        const image = create("img");
-        image.src = item.src;
-        image.alt = item.alt || `${project.title}项目截图 ${index + 1}`;
-        image.loading = "lazy";
-        image.decoding = "async";
-        image.addEventListener("error", () => link.remove(), { once: true });
-        link.append(image);
-        $("#projectGallery").append(link);
-      });
-    }
-
-    const externalLinks = $("#projectExternalLinks");
-    [[project.github, "GitHub ↗"], [project.demo, "在线演示 ↗"]].forEach(([href, label]) => {
-      if (!href) return;
-      const link = create("a", "btn", label);
-      link.href = href;
-      link.target = "_blank";
-      link.rel = "noopener";
-      externalLinks.append(link);
-    });
   }
 
   function renderResume() {
@@ -651,7 +681,7 @@
       li.append(create("strong", "", `${item.title}：`), document.createTextNode(item.summary));
       $("#resumeInterests").append(li);
     });
-    const projects = publicProjects();
+    const projects = publicProjects().filter(project => project.includeInResume !== false);
     if (projects.length) {
       $("#resumeProjectsSection").hidden = false;
       projects.forEach(project => {
@@ -682,13 +712,14 @@
     renderCertificates();
     renderGrowth();
     renderProjects();
-    renderProjectDetail();
     renderResume();
     setupTheme();
+    setupAmbientBackground();
     setupNavigation();
     setupScroll();
     setupMotionEnhancements();
     setupPortalCardMotion();
+    setupProjectCategoryMotion();
     setupMobileCardFocus();
     setupInteractiveVisual();
     setupReveal();
