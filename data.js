@@ -1,7 +1,7 @@
 window.SITE_DATA = {
   meta: {
-    version: "2.4",
-    updated: "2026-08-21",
+    version: "2.9.2",
+    updated: "2026-08-22",
     language: "zh-CN"
   },
   person: {
@@ -9,9 +9,15 @@ window.SITE_DATA = {
     englishName: "YIN YIBO",
     initials: "YYB",
     role: "数据科学与大数据技术本科新生",
+    identity: "AI 增强型数字创作者",
+    roles: [
+      { title: "AI 协作实践者", english: "AI COLLABORATION" },
+      { title: "PPT 视觉设计者", english: "PRESENTATION DESIGN" },
+      { title: "交互创意开发者", english: "INTERACTIVE CREATION" }
+    ],
     location: "山东 · 济南",
     email: { user: "cglezzul", host: "gmail", tld: "com" },
-    summary: "向下扎根，向上生长。"
+    summary: "敢于追问，持续进化。"
   },
   education: {
     school: "山东管理学院",
@@ -21,6 +27,16 @@ window.SITE_DATA = {
     location: "山东 · 济南",
     status: "2026 级 · 准大一"
   },
+  capabilities: [
+    { title: "AI 协作与智能工作流", visual: "ai", mark: "AI", preview: "assets/showcases/ai-collaboration-chat.webp", previewAlt: "AI 协作过程截图", previewFit: "contain", previewTone: "light" },
+    { title: "PPT 演示设计与视觉叙事", visual: "slides", mark: "PPT", preview: "assets/showcases/time-sovereignty-ppt.webp", previewAlt: "时间的主权 PPT 封面", previewFit: "contain", previewTone: "dark" },
+    { title: "交互设计与创意开发", visual: "creative", mark: "UX", preview: "assets/projects/campus-core-defense.webp", previewAlt: "校园核心防线游戏画面" }
+  ],
+  heroShowcases: [
+    { title: "AI 协作记录", english: "AI COLLABORATION", theme: "ai", preview: "assets/showcases/ai-collaboration-chat.webp", previewFit: "cover", previewTone: "light" },
+    { title: "PPT 作品展示", english: "PRESENTATION WORK", theme: "slides", preview: "assets/showcases/time-sovereignty-ppt.webp", previewFit: "cover", previewTone: "dark" },
+    { title: "校园核心防线", english: "INTERACTIVE WORK", theme: "creative", preview: "assets/projects/campus-core-defense.webp" }
+  ],
   interests: [
     {
       id: "data-engineering",
@@ -69,7 +85,12 @@ window.SITE_DATA = {
       period: "2026.08—至今",
       role: "项目发起、玩法设计、试玩反馈与验收",
       summary: "2D 俯视角动作塔防游戏：驾驶可独立瞄准的防卫坦克，在开放校园战场中建造设施、抵御波次敌人并守护能源核心。",
+      homeSummary: "以校园能源核心防守为主题的 2D 动作塔防游戏，通过 AI 协作完成玩法设计、开发验证与 Web 发布。",
       result: "与 Codex 协作完成玩法实现、测试和打包；当前形成 Web 构建与 Windows 便携版交付链路，并通过 47 项自动化测试。",
+      metrics: [
+        { value: "WEB", label: "在线运行" },
+        { value: "47", label: "自动化测试" }
+      ],
       stack: ["Phaser", "TypeScript", "Vite", "Vitest", "Electron", "Codex"],
       cover: "assets/projects/campus-core-defense.webp",
       coverAlt: "校园核心防线游戏准备阶段画面",

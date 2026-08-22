@@ -21,10 +21,12 @@
     <section class="hero home-hero">
       <div class="container home-intro">
         <div class="home-copy">
-          <p class="eyebrow hero-in">PERSONAL INDEX · VERSION 2.4</p>
+          <p class="eyebrow hero-in">PERSONAL INDEX · VERSION 2.9.2</p>
+          <div class="hero-identity hero-in d1"><i></i><strong id="heroIdentity"></strong><span>AI-ENHANCED DIGITAL CREATOR</span></div>
           <h1 class="hero-in d1" id="heroName"></h1>
           <p class="hero-echo hero-in d2" id="heroEnglish" aria-hidden="true"></p>
           <p class="hero-summary hero-in d3" id="heroSummary"></p>
+          <div class="hero-role-list hero-in d3" id="heroRoleList"></div>
           <div class="hero-education hero-in d3">
             <span>EDUCATION</span>
             <div><strong id="heroSchool"></strong><small id="heroMajor"></small></div>
@@ -36,7 +38,7 @@
             <button type="button" data-copy-email>复制</button>
           </div>
           <div class="hero-actions hero-in d4">
-            <a class="btn primary" href="#directory">浏览内容目录 <span class="arrow">↓</span></a>
+            <a class="btn primary" href="#featured">查看代表作品 <span class="arrow">↓</span></a>
             <a class="btn" href="about.html">查看个人档案 <span class="arrow">↗</span></a>
           </div>
         </div>
@@ -45,9 +47,9 @@
           <div class="visual-stage" id="visualStage">
             <div class="visual-grid"></div>
             <div class="visual-glow"></div>
-            <div class="visual-card visual-card-profile"><span>01</span><b>PROFILE</b></div>
-            <div class="visual-card visual-card-growth"><span>02</span><b>GROWTH</b></div>
-            <div class="visual-card visual-card-project"><span>03</span><b>PROJECT</b></div>
+            <div class="visual-card visual-card-profile" id="heroShowcase1"><div class="visual-card-media"></div><span>01 / WORK</span><b></b><small></small></div>
+            <div class="visual-card visual-card-growth" id="heroShowcase2"><div class="visual-card-media"></div><span>02 / WORK</span><b></b><small></small></div>
+            <div class="visual-card visual-card-project" id="heroShowcase3"><div class="visual-card-media"></div><span>03 / WORK</span><b></b><small></small></div>
             <div class="visual-core"><small>PERSONAL INDEX</small><strong>YYB</strong><i></i></div>
             <div class="visual-coordinate coordinate-x">X / 2026</div>
             <div class="visual-coordinate coordinate-y">Y / DATA</div>
@@ -58,15 +60,35 @@
 
     <div class="focus-marquee" aria-hidden="true">
       <div class="focus-track">
-        <span><b>01</b> PERSONAL PROFILE　/　<b>02</b> GROWTH RECORD　/　<b>03</b> PROJECT LIBRARY　/　</span>
-        <span><b>01</b> PERSONAL PROFILE　/　<b>02</b> GROWTH RECORD　/　<b>03</b> PROJECT LIBRARY　/　</span>
+        <span><b>01</b> SELECTED WORK　/　<b>02</b> CAPABILITY MATRIX　/　<b>03</b> PERSONAL PROFILE　/　<b>04</b> GROWTH RECORD　/　<b>05</b> PROJECT LIBRARY　/　</span>
+        <span><b>01</b> SELECTED WORK　/　<b>02</b> CAPABILITY MATRIX　/　<b>03</b> PERSONAL PROFILE　/　<b>04</b> GROWTH RECORD　/　<b>05</b> PROJECT LIBRARY　/　</span>
       </div>
     </div>
+
+    <section class="featured-section" id="featured">
+      <div class="container">
+        <header class="section-head reveal">
+          <div class="section-no">01 / SELECTED WORK</div>
+          <div><h2>把想法，做成作品。</h2></div>
+        </header>
+        <div id="featuredWork"></div>
+      </div>
+    </section>
+
+    <section class="capability-section" id="capabilities">
+      <div class="container">
+        <header class="section-head reveal">
+          <div class="section-no">02 / CAPABILITY MATRIX</div>
+          <div><h2>能力展示</h2></div>
+        </header>
+        <div class="capability-grid" id="capabilityGrid"></div>
+      </div>
+    </section>
 
     <section class="directory-section" id="directory">
       <div class="container">
         <header class="section-head reveal">
-          <div class="section-no">01 / DIRECTORY</div>
+          <div class="section-no">03 / DIRECTORY</div>
           <div><h2>三类内容，各自成档。</h2><p class="section-desc">个人档案、成长记录与项目作品。</p></div>
         </header>
 

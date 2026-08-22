@@ -178,7 +178,7 @@
   }
 
   function setupMotionEnhancements() {
-    const staggerGroups = [".project-grid"];
+    const staggerGroups = [".project-grid", ".capability-grid"];
     staggerGroups.forEach(selector => {
       const group = $(selector);
       if (!group) return;
@@ -195,20 +195,39 @@
   }
 
   function setupMobileCardFocus() {
-    const cards = $$(".portal-card");
+    const cards = $$(".portal-card,.capability-card");
     if (!cards.length || !(matchMedia("(pointer: coarse)").matches || innerWidth <= 760)) return;
     if (!("IntersectionObserver" in window)) {
       cards[0].classList.add("is-mobile-active");
       return;
     }
+    const visibility = new Map(cards.map(card => [card, 0]));
     const observer = new IntersectionObserver(entries => {
-      const visible = entries
-        .filter(entry => entry.isIntersecting)
+      entries.forEach(entry => visibility.set(entry.target, entry.isIntersecting ? entry.intersectionRatio : 0));
+      const visible = [...visibility]
+        .map(([target, intersectionRatio]) => ({ target, intersectionRatio }))
         .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
       if (!visible || visible.intersectionRatio < .48) return;
-      cards.forEach(card => card.classList.toggle("is-mobile-active", card === visible.target));
+      cards.forEach(card => {
+        const isActive = card === visible.target;
+        card.classList.toggle("is-mobile-active", isActive);
+        if (card.classList.contains("has-preview")) card.setAttribute("aria-expanded", String(isActive));
+      });
     }, { threshold: [.35, .48, .62, .78] });
     cards.forEach(card => observer.observe(card));
+
+    const previews = cards.filter(card => card.classList.contains("has-preview"));
+    previews.forEach(card => card.addEventListener("click", () => {
+      const willOpen = !card.classList.contains("is-mobile-active");
+      previews.forEach(item => {
+        item.classList.remove("is-mobile-active");
+        item.setAttribute("aria-expanded", "false");
+      });
+      if (willOpen) {
+        card.classList.add("is-mobile-active");
+        card.setAttribute("aria-expanded", "true");
+      }
+    }));
   }
 
   function setupPortalCardMotion() {
@@ -248,6 +267,73 @@
       });
       card.addEventListener("pointerleave", reset);
     });
+  }
+
+  function setupCapabilityCardMotion() {
+    const grid = $("#capabilityGrid");
+    const cards = $$(".capability-card", grid || document);
+    if (!grid || !cards.length || reducedMotion() || !matchMedia("(hover:hover) and (pointer:fine)").matches) return;
+
+    cards.forEach(card => {
+      let frame = 0;
+      const reset = () => {
+        cancelAnimationFrame(frame);
+        card.classList.remove("is-pointer-active");
+        grid.classList.remove("is-capability-hovering");
+        card.style.setProperty("--cap-rx", "0deg");
+        card.style.setProperty("--cap-ry", "0deg");
+        card.style.setProperty("--cap-spot-x", "50%");
+        card.style.setProperty("--cap-spot-y", "50%");
+        card.style.setProperty("--cap-shift-x", "0px");
+        card.style.setProperty("--cap-shift-y", "0px");
+      };
+      card.addEventListener("pointerenter", () => {
+        cards.forEach(item => item.classList.remove("is-pointer-active"));
+        card.classList.add("is-pointer-active");
+        grid.classList.add("is-capability-hovering");
+      });
+      card.addEventListener("pointermove", event => {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          const x = Math.max(-1, Math.min(1, (event.clientX - rect.left) / rect.width * 2 - 1));
+          const y = Math.max(-1, Math.min(1, (event.clientY - rect.top) / rect.height * 2 - 1));
+          card.style.setProperty("--cap-rx", `${(-y * 3.2).toFixed(2)}deg`);
+          card.style.setProperty("--cap-ry", `${(x * 4).toFixed(2)}deg`);
+          card.style.setProperty("--cap-spot-x", `${((x + 1) * 50).toFixed(1)}%`);
+          card.style.setProperty("--cap-spot-y", `${((y + 1) * 50).toFixed(1)}%`);
+          card.style.setProperty("--cap-shift-x", `${(x * 9).toFixed(1)}px`);
+          card.style.setProperty("--cap-shift-y", `${(y * 7).toFixed(1)}px`);
+        });
+      });
+      card.addEventListener("pointerleave", reset);
+    });
+  }
+
+  function setupFeaturedWorkMotion() {
+    const card = $(".featured-work");
+    if (!card || reducedMotion() || !matchMedia("(hover:hover) and (pointer:fine)").matches) return;
+    let frame = 0;
+    const reset = () => {
+      cancelAnimationFrame(frame);
+      card.style.setProperty("--work-x", "0px");
+      card.style.setProperty("--work-y", "0px");
+      card.style.setProperty("--work-spot-x", "50%");
+      card.style.setProperty("--work-spot-y", "50%");
+    };
+    card.addEventListener("pointermove", event => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const rect = card.getBoundingClientRect();
+        const x = Math.max(-1, Math.min(1, (event.clientX - rect.left) / rect.width * 2 - 1));
+        const y = Math.max(-1, Math.min(1, (event.clientY - rect.top) / rect.height * 2 - 1));
+        card.style.setProperty("--work-x", `${(x * 11).toFixed(1)}px`);
+        card.style.setProperty("--work-y", `${(y * 8).toFixed(1)}px`);
+        card.style.setProperty("--work-spot-x", `${((x + 1) * 50).toFixed(1)}%`);
+        card.style.setProperty("--work-spot-y", `${((y + 1) * 50).toFixed(1)}%`);
+      });
+    });
+    card.addEventListener("pointerleave", reset);
   }
 
   function setupProjectCategoryMotion() {
@@ -462,12 +548,117 @@
 
   function renderHome() {
     if (document.body.dataset.page !== "home") return;
+    $("#heroIdentity").textContent = data.person.identity;
     $("#heroName").textContent = data.person.name;
     $("#heroEnglish").textContent = data.person.englishName;
     $("#heroSummary").textContent = data.person.summary;
     $("#heroSchool").textContent = data.education.school;
     $("#heroMajor").textContent = `${data.education.major} · ${data.education.degree}`;
     $("#heroEducationPeriod").textContent = data.education.period;
+    (data.person.roles || []).forEach((role, index) => {
+      const chip = create("span", "", role.title);
+      $("#heroRoleList")?.append(chip);
+    });
+    (data.heroShowcases || []).forEach((item, index) => {
+      const card = $(`#heroShowcase${index + 1}`);
+      if (!card) return;
+      card.querySelector("b").textContent = item.title;
+      card.querySelector("small").textContent = item.english;
+      const media = card.querySelector(".visual-card-media");
+      media.classList.add(`theme-${item.theme || "default"}`);
+      if (item.previewFit) media.classList.add(`fit-${item.previewFit}`);
+      if (item.previewTone) media.classList.add(`tone-${item.previewTone}`);
+      if (item.preview) {
+        const image = create("img");
+        image.src = item.preview;
+        image.alt = "";
+        image.loading = "lazy";
+        image.decoding = "async";
+        media.append(image);
+        card.classList.add("has-preview");
+      }
+    });
+
+    const featured = publicProjects().find(project => project.featured) || publicProjects()[0];
+    const featuredHost = $("#featuredWork");
+    if (featured && featuredHost) {
+      const category = (data.projectCategories || []).find(item => item.id === featured.category);
+      const card = create("article", "featured-work reveal");
+      const media = create("a", "featured-work-media");
+      media.href = featured.demo || featured.github || "projects.html";
+      if (featured.demo || featured.github) {
+        media.target = "_blank";
+        media.rel = "noopener";
+      }
+      const image = create("img");
+      image.src = featured.cover;
+      image.alt = featured.coverAlt || featured.title;
+      image.loading = "lazy";
+      image.decoding = "async";
+      media.append(image, create("span", "featured-work-view", "体验作品 ↗"));
+      const body = create("div", "featured-work-body");
+      const meta = create("div", "featured-work-meta");
+      meta.append(create("span", "", category?.title || "代表作品"), create("span", "", featured.status || "可运行作品"));
+      const title = create("h3");
+      const titleParts = featured.title.split(/[：:]/).map(part => part.trim()).filter(Boolean);
+      (titleParts.length > 1 ? titleParts : [featured.title]).forEach(part => title.append(create("span", "", part)));
+      const summary = create("p", "", featured.homeSummary || featured.summary);
+      const metrics = create("div", "featured-work-metrics");
+      (featured.metrics || []).forEach(item => {
+        const metric = create("span");
+        metric.append(create("strong", "", item.value), create("small", "", item.label));
+        metrics.append(metric);
+      });
+      const action = create("a", "btn primary", "在线体验 ↗");
+      action.href = featured.demo || featured.github || "projects.html";
+      if (featured.demo || featured.github) {
+        action.target = "_blank";
+        action.rel = "noopener";
+      }
+      body.append(meta, title, summary);
+      if (metrics.children.length) body.append(metrics);
+      body.append(action);
+      card.append(media, body);
+      featuredHost.append(card);
+    }
+
+    const grid = $("#capabilityGrid");
+    (data.capabilities || []).forEach(item => {
+      const card = create("article", `capability-card capability-${item.visual} reveal`);
+      card.dataset.mark = item.mark || "";
+      if (item.preview) {
+        card.classList.add("has-preview");
+        card.tabIndex = 0;
+        card.setAttribute("aria-label", `${item.title}，查看作品预览`);
+        card.setAttribute("aria-expanded", "false");
+        const preview = create("div", "capability-preview");
+        if (item.previewFit) preview.classList.add(`fit-${item.previewFit}`);
+        if (item.previewTone) preview.classList.add(`tone-${item.previewTone}`);
+        const previewImage = create("img");
+        previewImage.src = item.preview;
+        previewImage.alt = item.previewAlt || item.title;
+        previewImage.loading = "lazy";
+        previewImage.decoding = "async";
+        preview.append(previewImage);
+        card.append(preview);
+      }
+      const visual = create("div", `capability-visual capability-visual-${item.visual}`);
+      visual.setAttribute("aria-hidden", "true");
+      if (item.visual === "ai") {
+        for (let index = 0; index < 5; index += 1) visual.append(create("span"));
+        for (let index = 0; index < 4; index += 1) visual.append(create("i"));
+      } else if (item.visual === "slides") {
+        ["01", "02", "03"].forEach(label => visual.append(create("span", "", label)));
+      } else if (item.visual === "creative") {
+        visual.append(
+          create("i", "creative-window creative-window-one"),
+          create("i", "creative-window creative-window-two"),
+          create("i", "creative-window creative-window-three")
+        );
+      }
+      card.append(visual, create("h3", "capability-title", item.title));
+      grid?.append(card);
+    });
   }
 
   function buildAchievementCard(item) {
@@ -718,6 +909,8 @@
     setupNavigation();
     setupScroll();
     setupMotionEnhancements();
+    setupCapabilityCardMotion();
+    setupFeaturedWorkMotion();
     setupPortalCardMotion();
     setupProjectCategoryMotion();
     setupMobileCardFocus();
