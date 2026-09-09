@@ -1,125 +1,184 @@
 <!doctype html>
-<html lang="zh-CN" data-mode="light" data-theme="cyan">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="尹宜博的个人主页、成长记录与项目作品库">
-  <meta name="color-scheme" content="light dark">
-  <title>尹宜博｜个人主页</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#07131f">
+  <meta name="description" content="尹宜博的个人品牌与作品集：用反问校准问题，以 AI 协作推进真实作品。">
+  <title>尹宜博 | 个人品牌与作品集</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <script src="data.js" defer></script>
-  <script src="site.js" defer></script>
+  <link rel="stylesheet" href="ambient.css">
+  <link rel="stylesheet" href="interactions.css">
 </head>
-<body data-page="home">
-  <a class="skip" href="#main">跳到主要内容</a>
-  <div class="page-wipe" aria-hidden="true"></div>
-  <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
-  <aside class="side-rail" aria-hidden="true"><span>SCROLL</span><i id="railLine"></i><span id="scrollPercent">00%</span></aside>
-  <header id="site-header"></header>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <div class="ambient" aria-hidden="true">
+    <canvas id="tideCanvas"></canvas>
+    <div class="ambient-fallback"></div>
+    <div class="ambient-vignette"></div>
+  </div>
+
+  <header class="site-header" id="siteHeader">
+    <a class="brand" href="#top" aria-label="返回首页"><span class="brand-mark">YYB</span><span class="brand-name">尹宜博</span></a>
+    <button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="siteNav"><span>导航</span><i aria-hidden="true"></i></button>
+    <nav class="site-nav" id="siteNav" aria-label="页面导航">
+      <a href="#capability">能力</a><a href="#works">作品</a><a href="#thinking">思考</a><a href="#certificates">证书</a><a href="#evidence">背景</a><a class="nav-contact" href="mailto:cglezzul@gmail.com">联系</a>
+    </nav>
+  </header>
 
   <main id="main">
-    <section class="hero home-hero">
-      <div class="container home-intro">
-        <div class="home-copy">
-          <p class="eyebrow hero-in">PERSONAL INDEX · VERSION 2.9.2</p>
-          <div class="hero-identity hero-in d1"><i></i><strong id="heroIdentity"></strong><span>AI-ENHANCED DIGITAL CREATOR</span></div>
-          <h1 class="hero-in d1" id="heroName"></h1>
-          <p class="hero-echo hero-in d2" id="heroEnglish" aria-hidden="true"></p>
-          <p class="hero-summary hero-in d3" id="heroSummary"></p>
-          <div class="hero-role-list hero-in d3" id="heroRoleList"></div>
-          <div class="hero-education hero-in d3">
-            <span>EDUCATION</span>
-            <div><strong id="heroSchool"></strong><small id="heroMajor"></small></div>
-            <time id="heroEducationPeriod"></time>
-          </div>
-          <div class="hero-contact hero-in d3">
-            <span>EMAIL / 联系方式</span>
-            <a data-email-link><strong data-email-text></strong><i>↗</i></a>
-            <button type="button" data-copy-email>复制</button>
-          </div>
-          <div class="hero-actions hero-in d4">
-            <a class="btn primary" href="#featured">查看代表作品 <span class="arrow">↓</span></a>
-            <a class="btn" href="about.html">查看个人档案 <span class="arrow">↗</span></a>
-          </div>
-        </div>
+    <section class="hero" id="top" aria-labelledby="heroTitle">
+      <div class="hero-field" aria-hidden="true"><span>QUESTION</span><span>BUILD</span><span>VERIFY</span><span>EVOLVE</span></div>
+      <div class="hero-copy">
+        <p class="hero-identity">尹宜博 <span>YIN YIBO</span></p>
+        <h1 id="heroTitle">在答案形成之前，<br><em>先重写问题的边界。</em></h1>
+        <p class="hero-summary">AI 协作实践者、视觉叙事者、交互创作者、系统化学习者。把模糊想法拆成可以判断、制作和验证的真实结果。</p>
+        <div class="hero-actions"><a class="primary-action" href="#works">查看作品</a><a class="text-action" href="mailto:cglezzul@gmail.com">cglezzul@gmail.com</a></div>
+      </div>
+      <div class="hero-foot"><p>山东济南</p><p>数据科学与大数据技术<br>山东管理学院 2026 至 2030</p><button class="motion-control" id="motionControl" type="button" aria-pressed="false">暂停背景</button></div>
+    </section>
 
-        <div class="interactive-visual hero-in d3" id="interactiveVisual" aria-hidden="true">
-          <div class="visual-stage" id="visualStage">
-            <div class="visual-grid"></div>
-            <div class="visual-glow"></div>
-            <div class="visual-card visual-card-profile" id="heroShowcase1"><div class="visual-card-media"></div><span>01 / WORK</span><b></b><small></small></div>
-            <div class="visual-card visual-card-growth" id="heroShowcase2"><div class="visual-card-media"></div><span>02 / WORK</span><b></b><small></small></div>
-            <div class="visual-card visual-card-project" id="heroShowcase3"><div class="visual-card-media"></div><span>03 / WORK</span><b></b><small></small></div>
-            <div class="visual-core"><small>PERSONAL INDEX</small><strong>YYB</strong><i></i></div>
-            <div class="visual-coordinate coordinate-x">X / 2026</div>
-            <div class="visual-coordinate coordinate-y">Y / DATA</div>
-          </div>
-        </div>
+    <section class="identity" aria-labelledby="identityTitle">
+      <div class="identity-statement">
+        <h2 id="identityTitle">我不从一个确定答案出发。</h2>
+        <p>我会先追问目标、约束与遗漏，再让每一次制作留下可验证的证据。2026 年 9 月起，我将在山东管理学院学习数据科学与大数据技术，把大学阶段作为一场持续验证方向、积累能力与保留选择权的长期实践。</p>
+      </div>
+      <p class="identity-aside">不是把 AI 当作答案机器，而是把它变成可质疑、可校准、可复盘的协作系统。</p>
+    </section>
+
+    <section class="capability" id="capability" aria-labelledby="capabilityTitle">
+      <div class="capability-heading">
+        <div><h2 id="capabilityTitle">我能为你做什么。</h2><p>不把能力停留在软件名称上。从澄清问题到交付可见结果，每一项都指向能继续判断和迭代的产物。</p><a class="capability-shortcut" href="#news-workflow">信息抓取 <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a></div>
+        <div class="rail-controls" aria-label="能力卡片控制"><button type="button" data-rail-prev aria-label="向左浏览">←</button><button type="button" data-rail-next aria-label="向右浏览">→</button></div>
+      </div>
+      <div class="capability-rail" id="capabilityRail" tabindex="0" aria-label="能力展示，可横向滑动">
+        <article class="capability-card">
+          <figure class="capability-art"><img src="assets/capability-visual-narrative.webp" alt="碎片化素材被组织为具有层次与节奏的视觉叙事" width="1200" height="800" decoding="async"></figure>
+          <span>CONTENT TO NARRATIVE</span><h3>PPT 叙事：把内容重组为有节奏的演示</h3><p>从主题命题出发建立叙事线、信息层级与关键画面，让复杂内容在有限时间内更容易被理解和记住。</p><a class="capability-evidence" href="ppt/index.html">进入 PPT 展厅</a>
+        </article>
+        <article class="capability-card">
+          <figure class="capability-art"><img src="assets/capability-ai-collaboration.webp" alt="人类判断与人工智能计算流共同构建结构化方案" width="1200" height="800" loading="lazy" decoding="async"></figure>
+          <span>PROBLEM TO PLAN</span><h3>AI 协作：把模糊问题变成可执行计划</h3><p>梳理目标、约束、优先级与验证标准，把散乱想法收束为可以立刻开始、随后复查的行动方案。</p><a class="capability-evidence" href="#thinking">查看工作原则</a>
+        </article>
+        <article class="capability-card">
+          <figure class="capability-art"><img src="assets/capability-interaction-prototype.webp" alt="人类与数字协作者共同构建可交互的空间结构" width="1200" height="800" loading="lazy" decoding="async"></figure>
+          <span>IDEA TO EXPERIENCE</span><h3>网页原型：把想法做成可交互体验</h3><p>把概念拆成页面、状态、反馈和验收条件，借助 AI 协作推进到能打开、能操作、能收集反馈的版本。</p><a class="capability-evidence" href="#work-campus">相关作品：校园核心防线</a>
+        </article>
+        <article class="capability-card">
+          <figure class="capability-art"><img src="assets/capability-knowledge-system.webp" alt="对话、资料与验证节点被连接为可复用的个人知识系统" width="1200" height="800" loading="lazy" decoding="async"></figure>
+          <span>AI ASSISTED WORKFLOW</span><h3>AI 工作流：构建可验证的学习与创作流程</h3><p>围绕具体任务组织提示、资料、检查与复盘，让 AI 输出能够被追踪、校验和继续复用。目前仍在持续实践。</p>
+          <details class="workflow-study" id="news-workflow">
+            <summary><span><strong>信息抓取</strong><span class="workflow-subtitle">AI 资讯检索与来源核验</span><small data-workflow-action>查看流程</small></span><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+            <div class="workflow-body">
+              <p>围绕近三天的 AI 资讯设定筛选规则，协作 AI 检索来源、检查日期并去重，整理成带日期、摘要和出处链接的简报。</p>
+              <ol class="workflow-steps">
+                <li><strong>限定日期窗口</strong><span>先约定时间范围与资讯主题。</span></li>
+                <li><strong>多源检索</strong><span>检索官网、研究机构与媒体原文。</span></li>
+                <li><strong>日期与来源检查</strong><span>回看发布日期，保留原文链接。</span></li>
+                <li><strong>去重筛选</strong><span>合并重复报道，按相关性选取。</span></li>
+                <li><strong>简报整理</strong><span>按日期、摘要和出处组织结果。</span></li>
+              </ol>
+            </div>
+          </details>
+        </article>
       </div>
     </section>
 
-    <div class="focus-marquee" aria-hidden="true">
-      <div class="focus-track">
-        <span><b>01</b> SELECTED WORK　/　<b>02</b> CAPABILITY MATRIX　/　<b>03</b> PERSONAL PROFILE　/　<b>04</b> GROWTH RECORD　/　<b>05</b> PROJECT LIBRARY　/　</span>
-        <span><b>01</b> SELECTED WORK　/　<b>02</b> CAPABILITY MATRIX　/　<b>03</b> PERSONAL PROFILE　/　<b>04</b> GROWTH RECORD　/　<b>05</b> PROJECT LIBRARY　/　</span>
+    <section class="works" id="works" aria-labelledby="worksTitle">
+      <div class="works-heading">
+        <h2 id="worksTitle">作品不是技能清单，<br>是判断留下的痕迹。</h2>
+        <p>以真实、可打开的结果为起点。文字先交代问题与价值，图像只在你主动靠近时出现。</p>
       </div>
-    </div>
-
-    <section class="featured-section" id="featured">
-      <div class="container">
-        <header class="section-head reveal">
-          <div class="section-no">01 / SELECTED WORK</div>
-          <div><h2>把想法，做成作品。</h2></div>
-        </header>
-        <div id="featuredWork"></div>
-      </div>
-    </section>
-
-    <section class="capability-section" id="capabilities">
-      <div class="container">
-        <header class="section-head reveal">
-          <div class="section-no">02 / CAPABILITY MATRIX</div>
-          <div><h2>能力展示</h2></div>
-        </header>
-        <div class="capability-grid" id="capabilityGrid"></div>
-      </div>
-    </section>
-
-    <section class="directory-section" id="directory">
-      <div class="container">
-        <header class="section-head reveal">
-          <div class="section-no">03 / DIRECTORY</div>
-          <div><h2>三类内容，各自成档。</h2><p class="section-desc">个人档案、成长记录与项目作品。</p></div>
-        </header>
-
-        <div class="portal-grid">
-          <a class="portal-card portal-about reveal" href="about.html">
-            <div class="portal-art portal-art-profile" aria-hidden="true"><span class="profile-ring"></span><span class="profile-mark">YYB</span><span class="profile-grid"></span></div>
-            <div class="portal-top"><span>01 / PERSONAL PROFILE</span><span>学历与成果</span></div>
-            <div class="portal-copy"><p>PERSONAL PROFILE</p><h3>个人档案</h3><ul><li>学历背景</li><li>证书竞赛</li><li>科研论文</li></ul></div>
-            <div class="portal-action"><span>进入个人档案</span><b>↗</b></div>
+      <div class="work-grid" id="workGrid">
+        <article class="work-card" id="work-campus" data-follow-card data-reveal="slide">
+          <a href="https://cglezzul-blip.github.io/tank/" target="_blank" rel="noopener">
+            <span class="work-kicker">INTERACTIVE WORK / 2026</span>
+            <h3>校园核心防线</h3>
+            <span class="work-type">可游玩的网页塔防游戏 <small>WEB GAME</small></span>
+            <p>以 AI 协作推进玩法构思、试玩反馈、验收与发布，把模糊体验要求转化为可运行的 Web 防御游戏。</p>
+            <span class="work-meta">玩法设计 / 测试反馈 / 在线发布</span><span class="work-open">打开在线作品 ↗</span>
+            <span class="work-follow-media" aria-hidden="true"><img src="assets/campus-core-defense-concept.webp" alt="" width="1200" height="800" decoding="async"></span>
           </a>
-
-          <a class="portal-card portal-growth reveal" href="growth.html">
-            <div class="portal-art portal-art-growth" aria-hidden="true"><span></span><span></span><span></span><i>01</i><i>02</i><i>03</i></div>
-            <div class="portal-top"><span>02 / GROWTH RECORD</span><span>持续更新</span></div>
-            <div class="portal-copy"><p>GROWTH RECORD</p><h3>成长记录</h3><ul><li>学习事件</li><li>实践记录</li><li>阶段变化</li></ul></div>
-            <div class="portal-action"><span>查看成长轨迹</span><b>↗</b></div>
+        </article>
+        <article class="work-card" id="work-time" data-follow-card data-reveal="slide">
+          <a href="ppt/index.html">
+            <span class="work-kicker">VISUAL NARRATIVE / 2026</span>
+            <h3>PPT 视觉作品</h3>
+            <span class="work-type">演示文稿作品集 <small>PRESENTATION DESIGN</small></span>
+            <p>时间的主权、智联万物、字里行间，古韵今声、绿水青山就是金山银山、乡村振兴、大江东去。</p>
+            <span class="work-meta">六个主题</span><span class="work-open">进入展厅 ↗</span>
+            <span class="work-follow-media" aria-hidden="true"><img src="assets/ppt-innovation-original-enhanced.webp" alt="" width="1600" height="900" loading="lazy" decoding="async"></span>
           </a>
-
-          <a class="portal-card portal-projects reveal" href="projects.html">
-            <div class="portal-art portal-art-code" aria-hidden="true"><span class="code-window"><i></i><i></i><i></i><b></b><b></b><b></b><b></b></span><span class="code-orbit"></span></div>
-            <div class="portal-top"><span>03 / PROJECT LIBRARY</span><span>分类浏览</span></div>
-            <div class="portal-copy"><p>PROJECT LIBRARY</p><h3>项目与作品</h3><ul><li>Vibe Coding</li><li>程序与数据</li><li>其他实践作品</li></ul></div>
-            <div class="portal-action"><span>进入项目库</span><b>↗</b></div>
+        </article>
+        <article class="work-card" id="work-site" data-follow-card data-reveal="slide">
+          <a href="https://cglezzul-blip.github.io/iiyy/" target="_blank" rel="noopener">
+            <span class="work-kicker">DIGITAL ARCHIVE / 2026</span>
+            <h3>个人网站</h3>
+            <span class="work-type">持续迭代的个人作品集 <small>WEB PORTFOLIO</small></span>
+            <p>把身份、认知、能力与证据组织为持续生长的公开界面，用真实反馈推动结构与视觉反复迭代。</p>
+            <span class="work-meta">信息架构 / 交互设计 / 持续迭代</span><span class="work-open">打开在线版本 ↗</span>
+            <span class="work-follow-media" aria-hidden="true"><img src="assets/personal-site-v6.webp" alt="" width="1200" height="833" loading="lazy" decoding="async"></span>
           </a>
+        </article>
+        <article class="work-card" id="work-info-capture" data-follow-card data-reveal="slide">
+          <a href="#news-workflow">
+            <span class="work-kicker">INFORMATION RESEARCH / 2026</span>
+            <h3>AI 信息抓取</h3>
+            <span class="work-type">AI 协作的资讯检索与简报流程 <small>AI RESEARCH WORKFLOW</small></span>
+            <p>围绕限定日期与主题协作 AI 检索多源资讯，核验发布时间和原文出处，合并重复信息，整理为可追溯的简报。</p>
+            <span class="work-meta">时间窗口 / 来源核验 / 去重整理</span><span class="work-open">查看抓取流程 ↗</span>
+            <span class="work-follow-media" aria-hidden="true"><img src="assets/capability-knowledge-system.webp" alt="资料与核验节点连接成 AI 协作研究工作流的概念图" width="1200" height="800" loading="lazy" decoding="async"></span>
+          </a>
+        </article>
+      </div>
+      <p class="work-hint">移动端可横向滑动查看全部作品</p>
+    </section>
+
+    <section class="thinking thinking--stage" id="thinking" aria-labelledby="thinkingTitle">
+      <div class="thinking-intro">
+        <h2 id="thinkingTitle">判断先于工具，<br>证据晚于行动。</h2>
+        <p>四条会被反复使用的工作原则。每个词都对应可以观察到的动作，而不是装饰性的口号。</p>
+      </div>
+      <div class="thinking-scroll"><div class="thinking-console">
+        <nav class="principle-nav" aria-label="工作原则索引"><a href="#principle-reverse">敢谋慎行</a><a href="#principle-goal">目标回溯</a><a href="#principle-evidence">知行互证</a><a href="#principle-compound">杠杆取舍</a></nav>
+        <div class="principle-list">
+          <article class="principle" id="principle-reverse"><span class="principle-index">BOLD VISION, PRECISE ACTION</span><h3>敢谋<span>慎行</span></h3><div class="principle-reason"><p>在战略上，不让困难的体量定义自身的边界；在战术上，不以方向的笃定替代对细节的敬畏。既有直面复杂局面的胆识，也有拆解条件、审视风险、步步求证的耐心，让进取有章法，让信心有支点。</p><div class="principle-trace"><span>战略定力</span><span>风险拆解</span><span>精细执行</span></div></div></article>
+          <article class="principle" id="principle-goal"><span class="principle-index">WORK BACKWARD</span><h3>目标<span>回溯</span></h3><div class="principle-reason"><p>以终为始，先辨明值得抵达的方向，再推演通往它的条件与路径。让理想中的生活、成长空间与自主选择，成为衡量当下行动的尺度；不让阶段性的身份、评价与工具，悄然取代真正追求的目的。</p><div class="principle-trace"><span>结果</span><span>条件</span><span>当前动作</span></div></div></article>
+          <article class="principle" id="principle-evidence"><span class="principle-index">THINK, ACT, REFINE</span><h3>知行<span>互证</span></h3><div class="principle-reason"><p>让认知成为行动的起点，而非未经检验的结论；让实践成为判断的尺度，而非既有观念的注脚。在理解、行动与反馈的往复中检验假设、修正偏差，使认识因实践而深化，使行动因认识而精进。</p><div class="principle-trace"><span>认知引导</span><span>实践检验</span><span>认知更新</span></div></div></article>
+          <article class="principle" id="principle-compound"><span class="principle-index">CHOOSE FOR LEVERAGE</span><h3>杠杆<span>取舍</span></h3><div class="principle-reason"><p>不只计算一次行动的投入与回报，也把时间、机会成本与潜在风险纳入判断；在相近的选择框架中，优先寻找能够以适度投入撬动更大长期收益的路径。所谓高杠杆，并非一味追求最低成本，而是在可承受的风险边界内，让一次行动同时沉淀为可迁移、可复用、可持续放大的能力，为后续选择保留更大的空间。</p><div class="principle-trace"><span>投入与回报</span><span>风险边界</span><span>放大效应</span></div></div></article>
         </div>
+      </div></div>
+    </section>
+
+    <section class="certificates" id="certificates" aria-labelledby="certificatesTitle">
+      <div class="certificates-heading"><p>认证与资质</p><h2 id="certificatesTitle">阶段性认证，<br>不是能力的终点。</h2><span>证书编号已作公开展示保护</span></div>
+      <div class="certificate-grid">
+        <figure data-reveal="slide"><button class="certificate-image" type="button" data-certificate-open="assets/certificate-ai-junior-redacted.webp" aria-label="放大查看人工智能训练师初级证书"><img src="assets/certificate-ai-junior-redacted.webp" alt="尹宜博人工智能训练师初级培训课程证书，编号已模糊" width="1600" height="1131" loading="lazy" decoding="async"></button><figcaption><strong>人工智能训练师（初级）</strong><time>2026.08.14</time></figcaption></figure>
+        <figure data-reveal="slide"><button class="certificate-image" type="button" data-certificate-open="assets/certificate-ai-advanced-redacted.webp" aria-label="放大查看人工智能训练师高级证书"><img src="assets/certificate-ai-advanced-redacted.webp" alt="尹宜博人工智能训练师高级培训课程证书，编号已模糊" width="1600" height="1131" loading="lazy" decoding="async"></button><figcaption><strong>人工智能训练师（高级）</strong><time>2026.08.23</time></figcaption></figure>
       </div>
     </section>
 
+    <section class="evidence" id="evidence" aria-labelledby="evidenceTitle">
+      <div class="evidence-heading"><h2 id="evidenceTitle">让表达有依据。</h2><p>学历说明当前起点，作品证明实际行动。尚未发生的经历不会被写成已经获得的成果。</p></div>
+      <div class="education-record"><p>教育背景</p><h3>山东管理学院</h3><div><span>数据科学与大数据技术本科</span><time>2026.09 至 2030.06，预计</time><p>从程序设计、数学、英语与计算机基础起步，在课程、项目和真实实践中逐步验证数据工程、大数据开发与软件工程方向。</p></div></div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contactTitle">
+      <p>如果你对作品、方法或一次合作感兴趣</p><h2 id="contactTitle">从一个好问题开始。</h2><a class="contact-email" href="mailto:cglezzul@gmail.com">cglezzul@gmail.com</a>
+      <div class="contact-directory" aria-label="其他联系方式">
+        <button class="contact-channel" type="button" data-copy-contact="18063574106" data-contact-name="手机号"><span class="contact-channel-label">PHONE</span><strong>180 6357 4106</strong><span class="contact-channel-action">点击复制</span></button>
+        <button class="contact-channel" type="button" data-copy-contact="ybyb03190319" data-contact-name="微信号"><span class="contact-channel-label">WECHAT</span><strong>ybyb03190319</strong><span class="contact-channel-action">点击复制</span></button>
+        <button class="contact-channel" type="button" data-copy-contact="3496806813" data-contact-name="QQ 号"><span class="contact-channel-label">QQ</span><strong>3496806813</strong><span class="contact-channel-action">点击复制</span></button>
+      </div>
+      <div class="contact-actions"><button type="button" id="copyEmail">复制邮箱</button><button type="button" id="printPage">打印或保存 PDF</button></div><p class="copy-status" id="copyStatus" role="status" aria-live="polite"></p>
+    </section>
   </main>
 
-  <footer id="site-footer"></footer>
-  <button class="icon-btn back-top" id="backTop" type="button" aria-label="返回顶部" title="返回顶部">↑</button>
+  <dialog class="certificate-dialog" id="certificateDialog" aria-labelledby="certificateDialogTitle"><div class="dialog-bar"><strong id="certificateDialogTitle">证书预览</strong><button type="button" data-dialog-close aria-label="关闭证书预览">关闭</button></div><img id="certificateDialogImage" src="assets/certificate-ai-junior-redacted.webp" alt="证书预览"></dialog>
+  <footer><span>尹宜博</span><span>山东济南</span><span>更新于 2026.09</span></footer>
+  <script src="app.js" defer></script>
+  <script src="ambient.js" defer></script>
+  <script src="interactions.js" defer></script>
 </body>
 </html>

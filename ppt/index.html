@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#142d50">
+  <title>PPT 作品展厅 | 尹宜博</title>
+  <meta name="description" content="尹宜博的 PPT 作品展厅，浏览演示作品及完整页面。">
+  <link rel="stylesheet" href="gallery.css">
+  <link rel="stylesheet" href="../ambient.css">
+  <script src="../ambient.js" defer></script>
+  <script src="innovation-pages.js" defer></script>
+  <script src="decks.js" defer></script>
+  <script src="spatial-field.js" defer></script>
+  <script src="gallery.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#space">进入作品空间</a>
+  <header class="gallery-header">
+    <a id="homeLink" href="../index.html#works">返回个人主页</a>
+    <button id="backToGallery" hidden type="button">返回展厅</button>
+    <h1 id="galleryTitle">PPT 作品展厅</h1>
+    <span id="collectionCount">6 套作品</span>
+  </header>
+  <main id="space" class="space" tabindex="-1" aria-label="作品空间，拖动探索或使用底部导航">
+    <div id="overviewWorld" class="world" aria-label="全部 PPT 作品"></div>
+    <div id="deckWorld" class="world" role="group" aria-roledescription="轮播" aria-label="整套 PPT，横向旋转浏览" hidden></div>
+    <p id="spaceStatus" class="sr-only" role="status" aria-live="polite"></p>
+  </main>
+  <footer class="gallery-controls">
+    <div id="overviewControls" class="overview-controls">
+      <p class="gesture-hint">拖动探索 · 滚轮推进 / 双指缩放 · 点击进入</p>
+      <div class="camera-controls" aria-label="空间远近">
+        <button id="cameraFar" type="button" aria-label="向后穿行">−</button><span>自由穿行</span><button id="cameraNear" type="button" aria-label="向前穿行">＋</button>
+      </div>
+      <label class="collection-picker"><span class="sr-only">选择作品</span><select id="deckPicker" aria-label="选择作品"><option value="">选择作品</option></select></label>
+      <button id="resetCamera" type="button">回到起点</button>
+    </div>
+    <div id="deckControls" class="deck-controls" hidden>
+      <div class="deck-actions">
+        <button id="previousPage" type="button">上一页</button>
+        <span id="pageCount" class="page-count" aria-live="polite">1 / 1</span>
+        <button id="nextPage" type="button">下一页</button>
+        <span class="control-divider" aria-hidden="true"></span>
+        <button id="focusPage" type="button">放大阅读</button>
+      </div>
+      <p class="deck-hint">滚轮、左右拖动或方向键翻页</p>
+    </div>
+  </footer>
+  <dialog id="imageViewer" aria-labelledby="viewerTitle">
+    <div class="viewer-toolbar">
+      <span id="viewerTitle"></span>
+      <div>
+        <button id="zoomOut" type="button" aria-label="缩小">缩小</button>
+        <button id="zoomReset" type="button" aria-label="恢复完整画面">100%</button>
+        <button id="zoomIn" type="button" aria-label="放大">放大</button>
+        <button id="viewerClose" type="button">返回页廊</button>
+      </div>
+    </div>
+    <div id="viewerViewport" class="viewer-viewport"><img id="viewerImage" alt=""></div>
+    <div class="viewer-bottom">
+      <button id="viewerPrevious" type="button">上一页</button>
+      <span id="viewerCount"></span>
+      <button id="viewerNext" type="button">下一页</button>
+    </div>
+  </dialog>
+  <noscript><section class="no-script"><h2>PPT 作品</h2><p>启用 JavaScript 可使用空间展厅。也可直接查看图片：</p><a href="../assets/ppt-gallery/time.webp">时间的主权</a><a href="../assets/ppt-gallery/innovation-full/page-01.webp">智联万物</a><a href="../assets/ppt-gallery/scroll.webp">字里行间，古韵今声</a><a href="../assets/ppt-gallery/green.webp">绿水青山就是金山银山</a><a href="../assets/ppt-gallery/rural.webp">乡村振兴</a><a href="../assets/ppt-gallery/long-march.webp">大江东去</a></section></noscript>
+</body>
+</html>

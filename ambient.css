@@ -1,0 +1,70 @@
+.ambient-field-enabled .ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none;
+  background: #070b12;
+}
+
+.ambient-field-enabled #tideCanvas,
+.ambient-field-enabled .ambient-fallback,
+.ambient-field-enabled .ambient-vignette {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.ambient-field-enabled #tideCanvas {
+  z-index: 1;
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+
+.ambient-field-enabled .ambient-fallback {
+  z-index: 0;
+  opacity: 1;
+  background:
+    url("assets/ppt-gallery/harness-field.webp") center / cover no-repeat,
+    radial-gradient(ellipse 67% 39% at 76% 35%, #7c8788 0%, #36536e 48%, transparent 77%),
+    linear-gradient(180deg, #204a7e 0%, #1a3870 20%, #15273e 67%, #080b10 100%);
+}
+
+.ambient-field-enabled .ambient-vignette {
+  z-index: 2;
+  background: none;
+}
+
+.ambient-field-enabled.ambient-webgl-ready #tideCanvas { opacity: 1; }
+.ambient-field-enabled.ambient-webgl-ready .ambient-fallback { opacity: 0; }
+
+.ambient-motion-control {
+  position: fixed;
+  z-index: 110;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  min-height: 44px;
+  padding: 9px 15px;
+  border: 1px solid rgba(224, 231, 236, .25);
+  border-radius: 22px;
+  background: rgba(15, 26, 42, .84);
+  color: #e5edf1;
+  font: 12px/1.4 "DengXian", "Microsoft YaHei UI", sans-serif;
+  cursor: pointer;
+}
+.ambient-motion-control:hover { border-color: rgba(224, 231, 236, .62); }
+.ambient-motion-control:focus-visible { outline: 2px solid #eed8aa; outline-offset: 4px; }
+.ambient-motion-control:disabled { cursor: default; color: #b9c9d1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-field-enabled #tideCanvas { opacity: 0 !important; transition: none; }
+  .ambient-field-enabled .ambient-fallback { opacity: 1 !important; transition: none; }
+}
+
+@media print {
+  .ambient-field-enabled .ambient,
+  .ambient-motion-control { display: none !important; }
+}
