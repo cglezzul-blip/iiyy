@@ -2,6 +2,8 @@
   'use strict';
 
   const innovationPages = window.INNOVATION_PAGES.pages.map(({ src, width, height, page }) => ({ src, width, height, page }));
+  const firePages = window.WANSHAN_FIRE_PAGES.pages.map(({ src, width, height, page }) => ({ src, width, height, page }));
+  const workReportPages = window.WORK_REPORT_PAGES.pages.map(({ src, width, height, page }) => ({ src, width, height, page }));
   const { src, width, height } = innovationPages[0];
 
   window.PPT_DECKS = [
@@ -43,6 +45,18 @@
       title: '大江东去',
       cover: { src: '../assets/ppt-gallery/long-march.webp', width: 1280, height: 720 },
       pages: [{ src: '../assets/ppt-gallery/long-march.webp', width: 1280, height: 720, page: 1 }]
+    },
+    {
+      id: 'wanshan-fire',
+      title: '提、拔、按、压 · 万山消防',
+      cover: firePages[0],
+      pages: firePages
+    },
+    {
+      id: 'work-report',
+      title: '工作汇报',
+      cover: workReportPages[0],
+      pages: workReportPages
     }
   ];
 })();
