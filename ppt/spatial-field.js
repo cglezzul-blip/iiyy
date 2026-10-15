@@ -15,16 +15,15 @@
       this.cache=new Map();this.instances=new Map();this.pinned=null;this.seed=seed;
       this.cell={x:1600,y:1100,z:1300};this.maxCache=256;
       const seen=new Set();this.pool=decks.map((deck,di)=>deck.pages.map((page,pi)=>({deck:di,deckId:deck.id,page:pi,src:page.src,width:page.width,height:page.height})).filter(item=>{if(seen.has(item.src))return false;seen.add(item.src);return true;}));
+      this.pagePool=this.pool.flat();
     }
     region(x,y,z){
       const key=`${x}:${y}:${z}`;
       if(this.cache.has(key)){const value=this.cache.get(key);this.cache.delete(key);this.cache.set(key,value);return value;}
       const rng=random(hash(`${this.seed}/${key}`));
-      // A weighted theme choice keeps the seventeen-page work present without
-      // letting its length erase the five other visual themes.
-      const ticket=rng(),longDeck=this.pool.findIndex(p=>p.length>9);
-      const deck=ticket<.38&&longDeck>=0?longDeck:Math.floor(rng()*this.pool.length);
-      const pages=this.pool[deck],item=pages[Math.floor(rng()*pages.length)];
+      // Every distinct slide gets one ticket, regardless of deck age or length.
+      // Coordinate-seeded selection stays stable when a region is revisited.
+      const item=this.pagePool[Math.floor(rng()*this.pagePool.length)];
       const value={...item,id:`${key}/0`,cellX:x,cellY:y,cellZ:z,
         x:(rng()-.5)*this.cell.x*.68,y:(rng()-.5)*this.cell.y*.68,
         z:(.28+rng()*.66)*this.cell.z,w:410+rng()*300};
